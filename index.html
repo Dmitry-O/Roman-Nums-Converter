@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Roman numerals converter</title>
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    <div class="container bg-warning pt-4 pb-4" style="margin: auto; margin-top: 15%; width: 15%;">
+        <div class="row">
+            <input type="text" class="m-auto" style="width: fit-content;" id="input" placeholder="Roman numerals"/>
+        </div>
+        <div class="row mt-2">
+            <button class="m-auto bg-primary text-light" onClick="convert()">Convert</button>
+            <button onClick="switchConverter()">Switch</button>
+        </div>
+        <div class="row mt-2">
+            <input class="m-auto" type="text" id="result" hidden/>
+        </div>
+    </div>
+
+    <script>
+        var romanConverter = true;
+        function switchConverter() {
+            romanConverter = !romanConverter;
+        }
+        function convert() {
+            let inp = document.getElementById("input").value;     
+            let result = document.getElementById("result");
+            result.hidden = false;
+            result.value = "";
+
+            if (romanConverter) {
+                let romans = {
+                    'I': 0,
+                    'V': 0,
+                    'X': 0,
+                    'L': 0,
+                    'C': 0,
+                    'D': 0,
+                    'M': 0
+                };
+            
+                let firstV = "";
+                for (let i=0; i < inp.length; i++) {
+                    if (!i) {
+                        firstV = inp[0];
+                    }
+                    switch(inp[i]) {
+                        case "I":
+                            romans.I += 1;
+                            break;
+                        case "V": 
+                            romans.V += 5;
+                            break;
+                        case "X": 
+                            romans.X += 10;
+                            break;
+                        case "L": 
+                            romans.L += 50;
+                            break;
+                        case "C": 
+                            romans.C += 100;
+                            break;
+                        case "D": 
+                            romans.D += 500;
+                            break;
+                        case "M": 
+                            romans.M += 1000;
+                            break;
+                        default: result.value = "Invalid value"; break;
+                    }
+                }
+
+                if (firstV == "I" && (romans.V || romans.X || romans.L || romans.C || romans.D || romans.M))
+                    result.value = "Invalid value";
+                else if (firstV == "V" && (romans.X || romans.L || romans.C || romans.D || romans.M))
+                    result.value = "Invalid value";
+                else if (firstV == "X" && (romans.L || romans.C || romans.D || romans.M))
+                    result.value = "Invalid value";
+                else if (firstV == "L" && (romans.C || romans.D || romans.M))
+                    result.value = "Invalid value";
+                else if (firstV == "C" && (romans.D || romans.M))
+                    result.value = "Invalid value";
+                else if (firstV == "D" && romans.M)
+                    result.value = "Invalid value";
+                else {
+                    if (result.value != "Invalid value") {
+                        let sum = romans.I + romans.V + romans.X + romans.L + romans.C + romans.D + romans.M;
+                        result.value = sum.toString();
+                    }
+                }
+            }
+
+            else {
+                let arabic = {
+                    "a1": "",
+                    "a5": "",
+                    "a10": "",
+                    "a50": "",
+                    "a100": "",
+                    "a500": "",
+                    "a1000": ""
+                };
+
+                for (let i=inp.value.length; i >= 0; i--) {
+                    if (i==inp.value.length)
+                        for (let j=0; j < 10; i++)
+                            if (inp[i] == j) {
+                                alert(j);
+                                switch (j) {
+                                    case 0: arabic.a1 = ""; break;
+                                    case 1: arabic.a1 = "I"; break;
+                                    case 2: arabic.a1 = "II"; break;
+                                    case 3: arabic.a1 = "III"; break;
+                                    case 4: arabic.a1 = "IV"; break;
+                                    case 5: arabic.a1 = "V"; break;
+                                    case 6: arabic.a1 = "VI"; break;
+                                    case 7: arabic.a1 = "VII"; break;
+                                    case 8: arabic.a1 = "VIII"; break;
+                                    case 9: arabic.a1 = "IX"; break;
+                                    default: break;
+                                }
+                            }
+                                        
+                }
+
+                /*for (let i=0; i < inp.length; i++) {
+                    switch(inp[i]) {
+                        case "1":
+                            arabic.a1 += "I";
+                            break;
+                        case "5": 
+                            arabic.a5 += 5;
+                            break;
+                        case "10": 
+                            arabic.a10 += 10;
+                            break;
+                        case "50": 
+                            arabic.a50 += 50;
+                            break;
+                        case "100": 
+                            arabic.a100 += 100;
+                            break;
+                        case "500": 
+                            arabic.a500 += 500;
+                            break;
+                        case "1000": 
+                            arabic.a1000 += 1000;
+                            break;
+                        default: result.value = "Invalid value"; break;
+                    }
+                }*/
+                let sum = arabic.a1000 + arabic.a500 + arabic.a100 + arabic.a50 + arabic.a10 + arabic.a5 + arabic.a1;
+                result.value = sum;
+            }
+        }
+    </script>
+</body>
+</html>
