@@ -15,7 +15,6 @@
         </div>
         <div class="row mt-2">
             <button class="m-auto bg-primary text-light" onClick="convert()">Convert</button>
-            <button onClick="switchConverter()">Switch</button>
         </div>
         <div class="row mt-2">
             <input class="m-auto" type="text" id="result" hidden/>
@@ -23,17 +22,12 @@
     </div>
 
     <script>
-        var romanConverter = true;
-        function switchConverter() {
-            romanConverter = !romanConverter;
-        }
         function convert() {
             let inp = document.getElementById("input").value;     
             let result = document.getElementById("result");
             result.hidden = false;
             result.value = "";
 
-            if (romanConverter) {
                 let romans = {
                     'I': 0,
                     'V': 0,
@@ -93,70 +87,6 @@
                         result.value = sum.toString();
                     }
                 }
-            }
-
-            else {
-                let arabic = {
-                    "a1": "",
-                    "a5": "",
-                    "a10": "",
-                    "a50": "",
-                    "a100": "",
-                    "a500": "",
-                    "a1000": ""
-                };
-
-                for (let i=inp.value.length; i >= 0; i--) {
-                    if (i==inp.value.length)
-                        for (let j=0; j < 10; i++)
-                            if (inp[i] == j) {
-                                alert(j);
-                                switch (j) {
-                                    case 0: arabic.a1 = ""; break;
-                                    case 1: arabic.a1 = "I"; break;
-                                    case 2: arabic.a1 = "II"; break;
-                                    case 3: arabic.a1 = "III"; break;
-                                    case 4: arabic.a1 = "IV"; break;
-                                    case 5: arabic.a1 = "V"; break;
-                                    case 6: arabic.a1 = "VI"; break;
-                                    case 7: arabic.a1 = "VII"; break;
-                                    case 8: arabic.a1 = "VIII"; break;
-                                    case 9: arabic.a1 = "IX"; break;
-                                    default: break;
-                                }
-                            }
-                                        
-                }
-
-                /*for (let i=0; i < inp.length; i++) {
-                    switch(inp[i]) {
-                        case "1":
-                            arabic.a1 += "I";
-                            break;
-                        case "5": 
-                            arabic.a5 += 5;
-                            break;
-                        case "10": 
-                            arabic.a10 += 10;
-                            break;
-                        case "50": 
-                            arabic.a50 += 50;
-                            break;
-                        case "100": 
-                            arabic.a100 += 100;
-                            break;
-                        case "500": 
-                            arabic.a500 += 500;
-                            break;
-                        case "1000": 
-                            arabic.a1000 += 1000;
-                            break;
-                        default: result.value = "Invalid value"; break;
-                    }
-                }*/
-                let sum = arabic.a1000 + arabic.a500 + arabic.a100 + arabic.a50 + arabic.a10 + arabic.a5 + arabic.a1;
-                result.value = sum;
-            }
         }
     </script>
 </body>
